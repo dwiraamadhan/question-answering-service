@@ -1,17 +1,18 @@
-from functions.question_answering import process_answer
+from fastapi import FastAPI
+from api.question_answering import router
+from pymongo.mongo_client import MongoClient
 
-def main():
-    # Bagian utama program
-    print("Halo, ini adalah program Python sederhana.")
-    nama = input("Siapa namamu? ")
-    print("Halo,", nama, "! Selamat datang.")
+app = FastAPI()
 
-    question = ("what is bni direct?")
-    result = process_answer(question)
-    print(result)
+# Create a new client and connect to the server
+uri = "mongodb://localhost:27017/"
+client = MongoClient(uri)
 
+# Send a ping to confirm a successful connection
+try:
+    client.admin.command("ping")
+    print("Pinged your deployment. You successfully connected to MongoDB!")
+except Exception as e:
+    print(e)
 
-
-# Memanggil fungsi main
-if __name__ == "__main__":
-    main()
+app.include_router(router)

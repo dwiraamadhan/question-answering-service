@@ -63,9 +63,6 @@ def process_answer(prompt):
     chain = qa_llm()
     answer = chain.invoke({"input": question})
     response = answer["answer"]
+    print("function response successful")
     return response
-
-
-question = ("what is Livin by Mandiri?")
-result = process_answer(question)
-print(result)
+    
