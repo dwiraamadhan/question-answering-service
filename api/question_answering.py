@@ -3,6 +3,7 @@ from models.questions import QuestionClass
 from functions.QA import process_answer
 from datetime import datetime
 from config.database import collection
+from kafka.producer import send_to_kafka
 
 router = APIRouter()
 
@@ -11,12 +12,16 @@ async def question_answering(question: QuestionClass):
     try:
         # process questions
         response = process_answer(question.text)
+        print(f"Question: {question.text}")
 
         # save question to database
         question_doc = {"text": question.text, "createdAt": datetime.now()}
         question_data = collection.insert_one(question_doc)
         inserted_id = str(question_data.inserted_id)
         print("question data saved")
+
+        # send message to kafka
+        send_to_kafka(response)
 
         return{
             "answer": response,

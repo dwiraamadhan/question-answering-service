@@ -11,7 +11,7 @@ load_dotenv()
 
 # function to access knowledge from vector store
 def get_data_from_pinecone():
-    # initialize pinecone api key
+    # define pinecone api key
     os.environ["PINECONE_API_KEY"] = os.getenv("PINECONE_API_KEY")
 
     # create object db to access pinecone
@@ -63,6 +63,6 @@ def process_answer(prompt):
     chain = qa_llm()
     answer = chain.invoke({"input": question})
     response = answer["answer"]
-    print("function response successful")
+    print("question answering successful")
     return response
     
