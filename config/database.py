@@ -1,5 +1,6 @@
 from pymongo import MongoClient
+import os
 
-client = MongoClient("mongodb://localhost:27017/")
+client = MongoClient(os.getenv("MONGODB_URL"))
 db = client["audio_ml"]
 collection = db ["question"]

@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from functions.QA import process_answer
 from confluent_kafka import Consumer, KafkaError, KafkaException
 from kafka.producer import send_to_kafka
@@ -6,8 +6,8 @@ from kafka.producer import send_to_kafka
 def kafka_consumer():
     # kafka configuration
     conf = {
-        "bootstrap.servers": "localhost:9092",
-        "group.id": "question-answering",
+        "bootstrap.servers": os.getenv("BROKER_SERVER"),
+        "group.id": os.getenv("GROUP_ID"),
         "auto.offset.reset" : "earliest"
     }
 
@@ -15,7 +15,7 @@ def kafka_consumer():
     consumer = Consumer(conf)
 
     # subscribe to topic
-    consumer.subscribe(["topicPertama"])
+    consumer.subscribe([os.getenv("CONSUMER_KAFKA_TOPIC")])
 
     try:
         while True:

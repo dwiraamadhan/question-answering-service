@@ -63,6 +63,7 @@ def process_answer(prompt):
     chain = qa_llm()
     answer = chain.invoke({"input": question})
     response = answer["answer"]
+    print(response)
     print("question answering successful")
     return response
     
